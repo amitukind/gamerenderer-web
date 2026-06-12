@@ -17,19 +17,20 @@
 ## Table of Contents
 
 - [✨ Highlights](#-highlights) · [🚀 Quick Start](#-quick-start) · [🏗 Architecture](#-architecture)
-- [🎨 Design System](#-design-system) · [🖼 Image Pipeline](#-image-pipeline) · [🔤 Typography](#-typography)
+- [🎨 Design System](#-design-system) · [🧊 3D Scenes](#-3d-scenes) · [🖼 Image Pipeline](#-image-pipeline) · [🔤 Typography](#-typography)
 - [🔍 SEO](#-seo) · [♿ Accessibility](#-accessibility) · [⚡ Performance](#-performance)
 - [📝 Editing Content](#-editing-content) · [🌐 Deployment](#-deployment) · [📜 License](#-license)
 
 ## ✨ Highlights
 
 - **10 content sections** — hero, about, services, process + tech stack, work + clients, why us, industries, testimonials, FAQ, contact — composed from focused Vue SFCs
-- **CSS-only 3D depth** — perspective fold-in reveals, card tilts and a hero grid floor, tokenized via `--persp` / `--bevel` (no WebGL, no JS animation libraries)
+- **Live Three.js background scenes** — a wireframe poly cluster (hero), rotating atom (services) and orbiting solar system (why-us), lazy-loaded on desktop with static PNG fallbacks when WebGL is unavailable
+- **CSS 3D micro-interactions** — perspective fold-in reveals, card tilts and a hero grid floor, tokenized via `--persp` / `--bevel`
 - **Modern image pipeline** — `vite-imagetools` generates AVIF/WebP responsive `srcset`s at build time
 - **Self-hosted variable fonts** — Montserrat + Nunito Sans `.woff2`, preloaded; zero third-party font requests
 - **Extensive SEO** — tuned metadata, four inline JSON-LD blocks, plus a **build-time prerender** that injects a crawlable static HTML snapshot and FAQPage JSON-LD into `dist/`
 - **WCAG AA** — accessible contrast tokens, reduced-motion support, full keyboard navigation
-- **Zero runtime dependencies beyond Vue** — icons are inline SVG, no UI framework, no CSS framework
+- **Lean runtime** — Vue + lazily-chunked Three.js only; icons are inline SVG, no UI framework, no CSS framework
 
 ## 🚀 Quick Start
 
@@ -69,9 +70,13 @@ src/
 │   ├── reveal.js           # v-reveal scroll-reveal directive (IntersectionObserver)
 │   ├── useActiveSection.js # active-nav highlighting on scroll
 │   └── useCountUp.js       # animated stat counters
+├── three/
+│   ├── webgl.js            # WebGL availability detection
+│   └── scenes/             # poly.js, atom.js, solar.js — Three.js background scenes
 └── components/
     ├── AppHeader.vue       # sticky nav + mobile drawer (Esc / backdrop to close)
     ├── BaseIcon.vue        # inline SVG icon set
+    ├── Scene3D.vue         # lazy Three.js host: WebGL/PNG fallback, pause offscreen
     ├── HeroSection.vue     # LCP-optimized hero + perspective grid floor
     ├── AboutSection.vue    # studio story + stats
     ├── StatCounter.vue     # count-up number used by About
@@ -101,6 +106,24 @@ Plain CSS with custom properties — every value lives in [`src/assets/styles/va
 | `--bevel` | inset top highlight | Light-catch edge on raised cards |
 
 Global classes (`container`, `section`, `section-head`, `eyebrow`, `lead`, `btn`) live in [`base.css`](src/assets/styles/base.css); everything else is Vue-scoped per component.
+
+## 🧊 3D Scenes
+
+Three ambient Three.js scenes float in text-free zones as background art — a low-poly
+wireframe cluster beside the hero headline, a rotating **atom** beside the services
+heading, and an orbiting **solar system** beside the why-us heading. All hosted by
+[`Scene3D.vue`](src/components/Scene3D.vue):
+
+- **Lazy by design** — `three` ships as a separate async chunk, imported only when a
+  scene scrolls near the viewport on desktop (≥ 1100px); mobile pays zero cost
+- **Static PNG fallbacks** — real renders of each scene
+  ([`src/assets/images/3d/`](src/assets/images/3d/)) shown when WebGL is unavailable
+  or `prefers-reduced-motion` is set
+- **Battery-friendly** — rendering pauses when a scene leaves the viewport or the tab
+  is hidden; pixel ratio capped at 1.5; full dispose on unmount
+- **Layered safely** — scenes sit at `z-index: 0` under content (`z-index: 1+`),
+  `pointer-events: none`, with a radial mask for soft edge blending; placement is
+  glyph-level verified not to overlap text at 1100/1280/1440/1920px
 
 ## 🖼 Image Pipeline
 
@@ -143,13 +166,14 @@ Measured from the production build (gzip where noted):
 
 | Asset | Size |
 | --- | --- |
-| JavaScript (single bundle) | ~41 KB gz |
+| JavaScript (main bundle) | ~43 KB gz |
+| Three.js (lazy chunk, desktop-only, on scroll) | ~128 KB gz |
 | CSS | ~6.5 KB gz |
 | Hero LCP image (AVIF) | ~29 KB (from a 348 KB source JPEG) |
-| Above-the-fold images (hero AVIF + logo) | ~35 KB |
+| 3D fallback PNGs (lazy, only without WebGL) | ~14–24 KB each |
 | Fonts (3 variable woff2, total) | ~102 KB |
 
-Single ES2018 bundle, no route splitting needed (one-page site), no runtime dependencies beyond Vue.
+The main ES2018 bundle stays lean — Three.js never blocks first paint and never loads on mobile.
 
 ## 📝 Editing Content
 

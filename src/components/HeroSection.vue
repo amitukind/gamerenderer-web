@@ -6,6 +6,7 @@ import heroWebp from '@/assets/images/hero-studio.jpg?format=webp&w=768;1280;192
 import heroJpg from '@/assets/images/hero-studio.jpg?format=jpeg&w=1280'
 import { hero } from '@/data/content'
 import BaseIcon from './BaseIcon.vue'
+import Scene3D from './Scene3D.vue'
 
 const mounted = ref(false)
 
@@ -39,6 +40,8 @@ onMounted(() => {
     </picture>
     <div class="hero__overlay"></div>
     <div class="hero__grid"></div>
+
+    <Scene3D scene="poly" class="hero__scene" />
 
     <div class="hero__inner container">
       <p class="hero__kicker">{{ hero.kicker }}</p>
@@ -122,6 +125,18 @@ onMounted(() => {
   mask-image: linear-gradient(to top, #000 0%, transparent 92%);
   -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 92%);
   pointer-events: none;
+}
+
+/* 3D scene floats in the free right third — above photo/overlay/grid, below text (z2).
+ * Width capped at 24vw so the widest title line ("render dreams.", ends ~x790@1100,
+ * ~x964@1440) always clears the wrapper's left edge with >24px to spare. */
+.hero__scene {
+  top: 50%;
+  right: 2%;
+  transform: translateY(-55%);
+  width: min(24vw, 480px);
+  aspect-ratio: 1;
+  z-index: 1;
 }
 
 .hero__inner {

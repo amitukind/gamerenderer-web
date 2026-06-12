@@ -1,10 +1,12 @@
 <script setup>
 import { services } from '@/data/content'
 import BaseIcon from './BaseIcon.vue'
+import Scene3D from './Scene3D.vue'
 </script>
 
 <template>
   <section id="services" class="section section--surface services">
+    <Scene3D scene="atom" class="services__scene" />
     <div class="container">
       <div class="section-head">
         <p class="eyebrow" v-reveal>What we do</p>
@@ -34,6 +36,14 @@ import BaseIcon from './BaseIcon.vue'
 </template>
 
 <style scoped>
+/* fills the empty zone right of the section-head; cards (container z1) slide over it */
+.services__scene {
+  top: clamp(2rem, 5vw, 5rem);
+  right: 3%;
+  width: min(24vw, 360px);
+  aspect-ratio: 1;
+}
+
 .services__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

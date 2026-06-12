@@ -136,6 +136,12 @@ ul {
   position: relative;
 }
 
+/* section content always stacks above absolutely-positioned 3D scenes */
+.section > .container {
+  position: relative;
+  z-index: 1;
+}
+
 .section--surface {
   background-color: var(--color-bg-darker);
 }

@@ -1,10 +1,12 @@
 <script setup>
 import { whyUs } from '@/data/content'
 import BaseIcon from './BaseIcon.vue'
+import Scene3D from './Scene3D.vue'
 </script>
 
 <template>
   <section id="why-us" class="section why">
+    <Scene3D scene="solar" class="why__scene" />
     <div class="container">
       <div class="section-head">
         <p class="eyebrow" v-reveal>{{ whyUs.kicker }}</p>
@@ -35,6 +37,14 @@ import BaseIcon from './BaseIcon.vue'
 </template>
 
 <style scoped>
+/* fills the empty zone right of the section-head; content (container z1) stacks above */
+.why__scene {
+  top: clamp(1rem, 4vw, 4rem);
+  right: 2%;
+  width: min(28vw, 430px);
+  aspect-ratio: 1;
+}
+
 .why__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
