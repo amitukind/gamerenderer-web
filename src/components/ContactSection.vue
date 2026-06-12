@@ -59,11 +59,13 @@ async function copyEmail() {
             <span class="contact__meta-icon"><BaseIcon name="pin" :size="20" /></span>
             <div>
               <span class="contact__label">Studio — India</span>
-              <p>
-                {{ company.address.line1 }}<br />
-                {{ company.address.line2 }}<br />
-                {{ company.address.line3 }}
-              </p>
+              <address>
+                <p>
+                  {{ company.address.line1 }}<br />
+                  {{ company.address.line2 }}<br />
+                  {{ company.address.line3 }}
+                </p>
+              </address>
             </div>
           </div>
 
@@ -208,6 +210,11 @@ async function copyEmail() {
   border-radius: var(--radius);
   background: var(--color-accent-soft);
   color: var(--color-accent-bright);
+}
+
+/* semantic <address> wrapper — neutralize the default italic styling */
+address {
+  font-style: normal;
 }
 
 .contact__meta-item p {

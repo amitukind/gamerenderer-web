@@ -40,7 +40,7 @@ function thumb(name) {
           v-reveal="(i % 3) * 80"
         >
           <div class="tile__art">
-            <img :src="thumb(item.image)" :alt="item.title" loading="lazy" />
+            <img :src="thumb(item.image)" :alt="item.alt" loading="lazy" />
           </div>
           <div class="tile__body">
             <h3 class="tile__title">{{ item.title }}</h3>

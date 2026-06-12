@@ -52,11 +52,13 @@ function toTop(event) {
         <div class="footer__contact">
           <span class="footer__col-title">Get in touch</span>
           <a :href="`mailto:${company.email}`" class="footer__email">{{ company.email }}</a>
-          <p class="footer__addr">
-            {{ company.address.line1 }}<br />
-            {{ company.address.line2 }}<br />
-            {{ company.address.line3 }}
-          </p>
+          <address>
+            <p class="footer__addr">
+              {{ company.address.line1 }}<br />
+              {{ company.address.line2 }}<br />
+              {{ company.address.line3 }}
+            </p>
+          </address>
           <p class="footer__addr footer__regions">Serving Europe · USA · UK · Worldwide</p>
         </div>
       </div>
@@ -142,6 +144,11 @@ function toTop(event) {
 }
 .footer__email:hover {
   color: var(--color-accent-bright);
+}
+
+/* semantic <address> wrapper — neutralize the default italic styling */
+address {
+  font-style: normal;
 }
 
 .footer__addr {

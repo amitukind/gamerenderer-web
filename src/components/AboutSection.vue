@@ -23,7 +23,7 @@ const mediaSizes = '(max-width: 860px) 92vw, 460px'
               :sizes="mediaSizes"
               width="960"
               height="960"
-              alt="Inside the GameRenderer Studios workspace"
+              alt="Game developers working at the GameRenderer Studios office in India"
               loading="lazy"
               decoding="async"
             />
