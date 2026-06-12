@@ -1,0 +1,63 @@
+/* ===================================================================
+ * Design tokens — derived from the original GameRenderer theme.
+ * Dark canvas (#121212) + purple accent (#793ea5).
+ * =================================================================== */
+
+:root {
+  /* --- brand palette --- */
+  --color-bg: #121212;
+  --color-bg-darker: #0d0d0d;
+  --color-surface: #171717;
+  --color-surface-2: #1d1d1f;
+  --color-surface-3: #232326;
+
+  --color-accent: #793ea5;
+  --color-accent-bright: #9a5fce;
+  --color-accent-deep: #6b3792;
+  --color-accent-soft: rgba(121, 62, 165, 0.14);
+
+  /* --- text --- */
+  --color-heading: #ffffff;
+  --color-text: rgba(255, 255, 255, 0.62);
+  --color-text-dim: rgba(255, 255, 255, 0.5); /* ≈4.6:1 on #121212 — WCAG AA for small text */
+  --color-text-faint: rgba(255, 255, 255, 0.35); /* decorative emphasis (clients wall) */
+
+  /* --- lines / borders --- */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* --- gradients --- */
+  --grad-accent: linear-gradient(135deg, #9a5fce 0%, #793ea5 55%, #5e3080 100%);
+  --grad-text: linear-gradient(120deg, #ffffff 0%, #c9a9e6 100%);
+  --grad-glow: radial-gradient(
+    circle at 50% 0%,
+    rgba(121, 62, 165, 0.35) 0%,
+    transparent 60%
+  );
+
+  /* --- typography --- */
+  --font-display: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* --- layout --- */
+  --container: 1180px;
+  --container-narrow: 820px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* --- effects --- */
+  --shadow-card: 0 18px 50px -22px rgba(0, 0, 0, 0.85);
+  --shadow-accent: 0 16px 40px -14px rgba(121, 62, 165, 0.55);
+  --transition: 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* --- 3D depth (shared vanishing point for all tilt effects) --- */
+  --persp: 900px;
+  --bevel: inset 0 1px 0 rgba(255, 255, 255, 0.06); /* top-edge light catch */
+
+  /* --- spacing rhythm --- */
+  --section-pad: clamp(5rem, 9vw, 9.5rem);
+
+  /* --- header --- */
+  --header-h: 78px;
+}
